@@ -20,12 +20,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<MovieDTO> movies = [];
+  List<MovieDTO> displayedMovies = [];
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     getMovies();
+    searchController.addListener(_onSearchChanged);
+  }
 
+  void _onSearchChanged() {
+    String query = searchController.text.toLowerCase();
+    if (query.isEmpty || query == "") {
+      setState(() {
+        displayedMovies = movies;
+      });
+    } else {
+      setState(() {
+        displayedMovies = movies
+            .where((movie) => movie.title.toLowerCase().contains(query))
+            .toList();
+      });
+    }
   }
 
   void getMovies() async {
@@ -34,23 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
       if(response.data.isNotEmpty)  {
         setState(() {
           movies = response.data;
+          displayedMovies = response.data;
         });
       }
 
     } catch (e) {
       setState(() {
         movies = [];
+        displayedMovies = [];
       });
     }
   }
 
   Widget generateMovieGrid () {
-    if (movies.isEmpty) return Container();
+    if (displayedMovies.isEmpty) return Container();
     return ListView(
       children: [
         StaggeredGrid.count(
             crossAxisCount: 2,
-            children: movies.map((e) => Container(
+            children: displayedMovies.map((e) => Container(
                 margin: const EdgeInsets.all(8),
                 child: MovieCard(
                   title: e.title,
@@ -115,7 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CustomSearchBar()),
+              Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CustomSearchBar(
+                controller: searchController,
+              )),
               Expanded(
                   child: generateMovieGrid()
               )
