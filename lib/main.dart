@@ -5,6 +5,7 @@ import 'package:movie_library/dto/MovieDTO.dart';
 import 'package:movie_library/pages/home.dart';
 import 'package:movie_library/pages/login.dart';
 import 'package:movie_library/pages/movie_detail.dart';
+import 'package:movie_library/pages/profile.dart';
 import 'package:movie_library/pages/suggestion.dart';
 
 void main() {
@@ -33,26 +34,14 @@ class MyApp extends StatelessWidget {
               builder: (context) => const LoginPage(),
             );
           case '/profile':
+            final user = settings.arguments as UserDTO;
             return MaterialPageRoute(
-              builder: (context) => const ProfilePage(),
+              builder: (context) => ProfileScreen(user: user),
             );
           default:
             return null;
         }
       },
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
     );
   }
 }

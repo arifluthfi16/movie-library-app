@@ -135,7 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.account_circle,
                   color: Colors.black87,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    '/profile',
+                    arguments: widget.user
+                  );
+                },
               ),
             ],
           ),
