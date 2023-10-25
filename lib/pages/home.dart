@@ -5,6 +5,10 @@ import 'package:movie_library/components/MovieCard.dart';
 import 'package:movie_library/components/SearchBar.dart';
 import 'package:movie_library/components/ThemeWrapper.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
+import 'package:movie_library/pages/loved_movies.dart';
+import 'package:movie_library/pages/movie_detail.dart';
+import 'package:movie_library/pages/suggestion.dart';
+import '../components/MovieGrid.dart';
 import '../dto/AuthDTO.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<MovieDTO> movies = [];
   List<MovieDTO> displayedMovies = [];
+  List<MovieDTO> lovedMovies = [];
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -61,31 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget generateMovieGrid () {
-    if (displayedMovies.isEmpty) return Container();
-    return ListView(
-      children: [
-        StaggeredGrid.count(
-            crossAxisCount: 2,
-            children: displayedMovies.map((e) => GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                    "/detail",
-                    arguments: e
-                );
-              },
-              child: Container(
-                  margin: const EdgeInsets.all(8),
-                  child: MovieCard(
-                    title: e.title,
-                    genre: e.genre,
-                    releaseYear: e.releaseYear,
-                  )
-              ),
-            )).toList()
-        ),
-      ],
-    );
+  void addToFavorite(MovieDTO movieToAdd) {
+    if (!lovedMovies.any((movie) => movie.id == movieToAdd.id)) {
+      setState(() {
+        lovedMovies.add(movieToAdd);
+      });
+    }
   }
 
   @override
@@ -108,9 +94,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.orangeAccent,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
-                      "/suggestion",
-                    arguments: this.widget.user
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SuggestedMovieScreen(
+                          lovedMovies: lovedMovies,
+                          addToFavorite: (MovieDTO movie) {
+                            addToFavorite(movie);
+                          },
+                          user: widget.user,
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -119,7 +114,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.favorite_outline,
                   color: Colors.red,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return LovedMoviesScreen(
+                          lovedMovies: lovedMovies,
+                          addToFavorite: (MovieDTO movie) {
+                            addToFavorite(movie);
+                          },
+                          user: widget.user,
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -142,7 +151,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: searchController,
               )),
               Expanded(
-                  child: generateMovieGrid()
+                child: MovieGrid(
+                  addToFavorite: addToFavorite,
+                  displayedMovies: displayedMovies,
+                  lovedMovies: lovedMovies,
+                )
               )
             ],
           ),

@@ -8,18 +8,18 @@ import 'package:movie_library/components/ThemeWrapper.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
 import '../dto/AuthDTO.dart';
 
-class SuggestedMovieScreen extends StatefulWidget {
+class LovedMoviesScreen extends StatefulWidget {
   final UserDTO user;
   final Function(MovieDTO) addToFavorite;
   final List<MovieDTO> lovedMovies;
 
-  const SuggestedMovieScreen({Key? key, required this.user, required this.addToFavorite, required this.lovedMovies}) : super(key: key);
+  const LovedMoviesScreen({Key? key, required this.user, required this.lovedMovies, required this.addToFavorite}) : super(key: key);
 
   @override
-  State<SuggestedMovieScreen> createState() => _SuggestedMovieScreenState();
+  State<LovedMoviesScreen> createState() => _LovedMoviesScreenState();
 }
 
-class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
+class _LovedMoviesScreenState extends State<LovedMoviesScreen> {
   List<MovieDTO> movies = [];
   List<MovieDTO> displayedMovies = [];
   TextEditingController searchController = TextEditingController();
@@ -47,48 +47,10 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
   }
 
   void getMovies() async {
-    try {
-      MovieResponseDTO response = await MovieAPI.getSuggestedMovies();
-      if(response.data.isNotEmpty)  {
-        setState(() {
-          movies = response.data;
-          displayedMovies = response.data;
-        });
-      }
-
-    } catch (e) {
-      setState(() {
-        movies = [];
-        displayedMovies = [];
-      });
-    }
-  }
-
-  Widget generateMovieGrid () {
-    if (displayedMovies.isEmpty) return Container();
-    return ListView(
-      children: [
-        StaggeredGrid.count(
-            crossAxisCount: 2,
-            children: displayedMovies.map((e) => GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                    "/detail",
-                    arguments: e
-                );
-              },
-              child: Container(
-                  margin: const EdgeInsets.all(8),
-                  child: MovieCard(
-                    title: e.title,
-                    genre: e.genre,
-                    releaseYear: e.releaseYear,
-                  )
-              ),
-            )).toList()
-        ),
-      ],
-    );
+    setState(() {
+      movies = widget.lovedMovies;
+      displayedMovies = widget.lovedMovies;
+    });
   }
 
   @override
@@ -98,7 +60,7 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text("Suggested Movies",
+          title: const Text("Loved Movies",
             style: TextStyle(
                 color: Colors.black87,
                 fontWeight: FontWeight.w400
@@ -126,7 +88,7 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
                   child: MovieGrid(
                     addToFavorite: widget.addToFavorite,
                     displayedMovies: displayedMovies,
-                    lovedMovies: widget.lovedMovies,
+                    lovedMovies: widget.lovedMovies
                   )
               )
             ],

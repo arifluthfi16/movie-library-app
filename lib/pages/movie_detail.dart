@@ -7,8 +7,10 @@ import 'package:movie_library/dto/MovieDTO.dart';
 
 class MovieDetail extends StatelessWidget {
   final MovieDTO movie;
+  final bool isFavorite;
+  final Function(MovieDTO) addToFavorite;
 
-  const MovieDetail({Key? key, required this.movie}) : super(key: key);
+  const MovieDetail({Key? key, required this.movie, required this.addToFavorite, required this.isFavorite}) : super(key: key);
 
   Widget movieDetailHeader () {
     return Container(
@@ -140,12 +142,16 @@ class MovieDetail extends StatelessWidget {
                 movieDetailHeader(),
                 Expanded(child: movieBody()),
                 Container(
-                  child: CustomButton(
-                    backgroundColor: Colors.redAccent,
-                    text: "Add to Favorite",
-                    leftIcon: Icon(Icons.favorite_outline),
-                  ),
                   margin: EdgeInsets.all(24),
+                  child: CustomButton(
+                    isDisabled: isFavorite,
+                    backgroundColor: isFavorite ? Colors.lightGreen : Colors.redAccent,
+                    text: isFavorite ? "Added!" : "Add to Favorite",
+                    leftIcon: isFavorite ? const Icon(Icons.check) :  const Icon(Icons.favorite_outline),
+                    onPressed: () {
+                      if (!isFavorite) addToFavorite(movie);
+                    },
+                  ),
                 )
               ],
             ),

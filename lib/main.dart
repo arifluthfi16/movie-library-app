@@ -28,11 +28,6 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => HomeScreen(user: user),
             );
-          case '/suggestion':
-            final user = settings.arguments as UserDTO;
-            return MaterialPageRoute(
-              builder: (context) => SuggestedMovieScreen(user: user),
-            );
           case '/login':
             return MaterialPageRoute(
               builder: (context) => const LoginPage(),
@@ -40,11 +35,6 @@ class MyApp extends StatelessWidget {
           case '/profile':
             return MaterialPageRoute(
               builder: (context) => const ProfilePage(),
-            );
-          case '/detail':
-            final movie = settings.arguments as MovieDTO;
-            return MaterialPageRoute(
-              builder: (context) => MovieDetail(movie: movie),
             );
           default:
             return null;
