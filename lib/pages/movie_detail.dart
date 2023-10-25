@@ -119,7 +119,7 @@ class MovieDetail extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            elevation: 0, // Remove the shadow
+            elevation: 0,
             title: const Text("Movie Detail",
               style: TextStyle(
                   color: Colors.black87,

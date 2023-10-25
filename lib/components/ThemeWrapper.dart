@@ -13,9 +13,6 @@ class ThemeWrapper extends StatelessWidget {
           primary: const Color(0xFF6A4DFF),
           secondary: const Color(0xFF8C76FF)
       ),
-        // primaryColor: Color(0xFF6A4DFF), // Primary color
-        // accentColor: Color(0xFF8C76FF), // Accent color
-        // Add any other theme properties you want to customize
       ),
       home: child,
     );

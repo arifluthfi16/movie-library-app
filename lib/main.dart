@@ -5,6 +5,7 @@ import 'package:movie_library/dto/MovieDTO.dart';
 import 'package:movie_library/pages/home.dart';
 import 'package:movie_library/pages/login.dart';
 import 'package:movie_library/pages/movie_detail.dart';
+import 'package:movie_library/pages/suggestion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +27,11 @@ class MyApp extends StatelessWidget {
             final user = settings.arguments as UserDTO;
             return MaterialPageRoute(
               builder: (context) => HomeScreen(user: user),
+            );
+          case '/suggestion':
+            final user = settings.arguments as UserDTO;
+            return MaterialPageRoute(
+              builder: (context) => SuggestedMovieScreen(user: user),
             );
           case '/login':
             return MaterialPageRoute(

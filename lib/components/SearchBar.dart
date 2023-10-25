@@ -10,10 +10,10 @@ class CustomSearchBar extends StatelessWidget {
     return SizedBox(
       height: 50.0,
       child: TextField(
-        controller: controller, // Use the provided controller
+        controller: controller,
         style: const TextStyle(fontSize: 16),
         decoration: const InputDecoration(
-          labelText: "Search Movies", // Changed "label" to "labelText"
+          labelText: "Search Movies",
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.search),
           contentPadding: EdgeInsets.symmetric(vertical: 12),

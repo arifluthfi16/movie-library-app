@@ -20,4 +20,18 @@ class MovieAPI {
     }
   }
 
+  static Future<MovieResponseDTO> getSuggestedMovies() async {
+    try {
+      RequestWrapper dio = RequestWrapper();
+      final response = await dio.get('$baseUrl/suggestion');
+      if (response.statusCode == 200) {
+        return MovieResponseDTO.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Failed to load data: $e');
+    }
+  }
+
 }

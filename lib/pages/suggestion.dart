@@ -7,16 +7,16 @@ import 'package:movie_library/components/ThemeWrapper.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
 import '../dto/AuthDTO.dart';
 
-class HomeScreen extends StatefulWidget {
+class SuggestedMovieScreen extends StatefulWidget {
   final UserDTO user;
 
-  const HomeScreen({Key? key, required this.user}) : super(key: key);
+  const SuggestedMovieScreen({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SuggestedMovieScreen> createState() => _SuggestedMovieScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
   List<MovieDTO> movies = [];
   List<MovieDTO> displayedMovies = [];
   TextEditingController searchController = TextEditingController();
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getMovies() async {
     try {
-      MovieResponseDTO response = await MovieAPI.getAllMovies();
+      MovieResponseDTO response = await MovieAPI.getSuggestedMovies();
       if(response.data.isNotEmpty)  {
         setState(() {
           movies = response.data;
@@ -92,44 +92,39 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ThemeWrapper(
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: const Text("All Movies",
-              style: TextStyle(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text("Suggested Movies",
+            style: TextStyle(
                 color: Colors.black87,
                 fontWeight: FontWeight.w400
-              ),
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.star_outline,
-                  color: Colors.orangeAccent,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                      "/suggestion",
-                    arguments: this.widget.user
-                  );
-                },
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.favorite_outline,
-                  color: Colors.red,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.account_circle,
-                  color: Colors.black87,
-                ),
-                onPressed: () {},
-              ),
-            ],
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black87,),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.favorite_outline,
+                color: Colors.red,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.account_circle,
+                color: Colors.black87,
+              ),
+              onPressed: () {
+              },
+            ),
+          ],
+        ),
         body: Container(
           decoration: const BoxDecoration(
               color: Colors.white
