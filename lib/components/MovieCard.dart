@@ -32,10 +32,10 @@ class MovieCard extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 158,
+            height: 200,
             decoration: const ShapeDecoration(
               image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/165x158"),
+                image: NetworkImage("https://via.placeholder.com/165x200"),
                 fit: BoxFit.fill,
               ),
               shape: RoundedRectangleBorder(

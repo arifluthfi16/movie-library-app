@@ -69,13 +69,21 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         StaggeredGrid.count(
             crossAxisCount: 2,
-            children: displayedMovies.map((e) => Container(
-                margin: const EdgeInsets.all(8),
-                child: MovieCard(
-                  title: e.title,
-                  genre: e.genre,
-                  releaseYear: e.releaseYear,
-                )
+            children: displayedMovies.map((e) => GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                    "/detail",
+                    arguments: e
+                );
+              },
+              child: Container(
+                  margin: const EdgeInsets.all(8),
+                  child: MovieCard(
+                    title: e.title,
+                    genre: e.genre,
+                    releaseYear: e.releaseYear,
+                  )
+              ),
             )).toList()
         ),
       ],
@@ -99,25 +107,22 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                 icon: const Icon(
-                  Icons.search,
-                  color: Colors.black87,
+                  Icons.star_outline,
+                  color: Colors.orangeAccent,
                 ),
                 onPressed: () {
-                  // Handle the search button press
                 },
               ),
               IconButton(
                 icon: const Icon(
-                  Icons.settings,
-                  color: Colors.black87,
+                  Icons.favorite_outline,
+                  color: Colors.red,
                 ),
-                onPressed: () {
-                  // Handle the settings button press
-                },
+                onPressed: () {},
               ),
               IconButton(
                 icon: const Icon(
-                  Icons.more_vert,
+                  Icons.account_circle,
                   color: Colors.black87,
                 ),
                 onPressed: () {

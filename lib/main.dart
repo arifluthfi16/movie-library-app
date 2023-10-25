@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:movie_library/dto/AuthDTO.dart';
+import 'package:movie_library/dto/MovieDTO.dart';
 import 'package:movie_library/pages/home.dart';
 import 'package:movie_library/pages/login.dart';
+import 'package:movie_library/pages/movie_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +34,11 @@ class MyApp extends StatelessWidget {
           case '/profile':
             return MaterialPageRoute(
               builder: (context) => const ProfilePage(),
+            );
+          case '/detail':
+            final movie = settings.arguments as MovieDTO;
+            return MaterialPageRoute(
+              builder: (context) => MovieDetail(movie: movie),
             );
           default:
             return null;

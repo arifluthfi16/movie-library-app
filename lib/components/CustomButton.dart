@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final Function()? onPressed;
   final bool isOutline;
   final bool isDisabled;
+  final Icon? leftIcon;
 
   CustomButton({
     required this.text,
@@ -13,12 +14,13 @@ class CustomButton extends StatelessWidget {
     this.onPressed,
     this.isOutline = false,
     this.isDisabled = false,
+    this.leftIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity, // Ensure the parent widget is set to full width
+      width: double.infinity,
       child: TextButton(
         onPressed: isDisabled ? null : onPressed,
         style: TextButton.styleFrom(
@@ -33,12 +35,22 @@ class CustomButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
         ),
-        child: Text(text, style: const TextStyle(
-          fontSize: 16,
-          fontFamily: 'Inter',
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-        ),),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (leftIcon != null) leftIcon!,
+            SizedBox(width: leftIcon != null ? 8.0 : 0),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Inter',
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
