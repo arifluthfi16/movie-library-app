@@ -20,7 +20,7 @@ class CreateOrUpdateMovieScreen extends StatefulWidget {
 class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
   final titleController = TextEditingController();
   final releaseYearController = TextEditingController();
-  String genre = "";
+  String? genre = null;
   final ratingController = TextEditingController();
   final descriptionController = TextEditingController();
   final thumbnailController = TextEditingController();
@@ -116,7 +116,7 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
       thumbnailUrl: thumbnailController.text,
       title: titleController.text,
       description: descriptionController.text,
-      genre: genre,
+      genre: genre.toString(),
       rating: int.parse(ratingController.text),
       releaseYear: int.parse(releaseYearController.text),
     );
@@ -149,7 +149,7 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
             width: 200,
             height: 60,
             child: DropdownButton<String>(
-              value: "SC",
+              value: genre,
               onChanged: (value) {
                 setState(() {
                   genre = value.toString();
@@ -157,10 +157,31 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
               },
               items: const [
                 DropdownMenuItem<String>(
-                  value: "SC",
+                  value: "SciFi",
                   child: SizedBox(
                     width: 170,
-                    child: Text("Scifi", overflow: TextOverflow.ellipsis),
+                    child: Text("SciFi", overflow: TextOverflow.ellipsis),
+                  ),
+                ),
+                DropdownMenuItem<String>(
+                  value: "Action",
+                  child: SizedBox(
+                    width: 170,
+                    child: Text("Action", overflow: TextOverflow.ellipsis),
+                  ),
+                ),
+                DropdownMenuItem<String>(
+                  value: "Thriller",
+                  child: SizedBox(
+                    width: 170,
+                    child: Text("Thriller", overflow: TextOverflow.ellipsis),
+                  ),
+                ),
+                DropdownMenuItem<String>(
+                  value: "Romance",
+                  child: SizedBox(
+                    width: 170,
+                    child: Text("Romance", overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ],
