@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getMovies();
     searchController.addListener(_onSearchChanged);
   }
 
@@ -74,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getMovies();
     return ThemeWrapper(
       child: Scaffold(
           appBar: AppBar(
@@ -179,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   addToFavorite: addToFavorite,
                   displayedMovies: displayedMovies,
                   lovedMovies: lovedMovies,
+                  user: widget.user,
                 )
               )
             ],

@@ -31,15 +31,21 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
   @override
   void initState() {
     super.initState();
+    initiateForm();
+  }
+
+  void initiateForm() {
     if (widget.action == "UPDATE") {
       setState(() {
-        titleController.text = widget.movieToUpdateDTO!.title ?? '';
-        releaseYearController.text = widget.movieToUpdateDTO!.releaseYear?.toString() ?? '';
-        ratingController.text = widget.movieToUpdateDTO!.rating?.toString() ?? '';
-        descriptionController.text = widget.movieToUpdateDTO!.description ?? '';
-        thumbnailController.text = widget.movieToUpdateDTO!.thumbnailUrl ?? '';
-        genre = widget.movieToUpdateDTO!.genre;
-        action = "CREATE";
+        if (widget.movieToUpdateDTO != null) {
+          titleController.text = widget.movieToUpdateDTO!.title ?? '';
+          releaseYearController.text = widget.movieToUpdateDTO!.releaseYear?.toString() ?? '';
+          ratingController.text = widget.movieToUpdateDTO!.rating?.toString() ?? '';
+          descriptionController.text = widget.movieToUpdateDTO!.description ?? '';
+          thumbnailController.text = widget.movieToUpdateDTO!.thumbnailUrl ?? '';
+          genre = widget.movieToUpdateDTO!.genre;
+          action = "UPDATE";
+        }
       });
     }
   }
@@ -79,7 +85,13 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
   void handleResponse (SingleMovieResponseDTO responseDTO) {
     if (responseDTO.data != null) {
       String actionKeyword = action == "CREATE" ? "Created" : "Updated";
-      showToast("Successfully $actionKeyword a Movie");
+      showToast("Successfully $actionKeyword a Movie, redirecting in 2 second");
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.of(context).pushReplacementNamed(
+          "/home",
+          arguments: widget.user
+        );
+      });
     } else if (responseDTO.data == null && responseDTO.message != null){
       showToast(responseDTO.message.toString());
     } else if (responseDTO.errors != null && responseDTO.errors!.isNotEmpty) {
@@ -199,6 +211,7 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initiateForm();
     return ThemeWrapper(
       child: Scaffold(
         appBar: AppBar(

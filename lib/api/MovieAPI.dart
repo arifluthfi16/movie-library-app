@@ -55,4 +55,14 @@ class MovieAPI {
     }
   }
 
+  static Future<SingleMovieResponseDTO> deleteMovie (int id) async {
+    try {
+      RequestWrapper dio = RequestWrapper();
+      final response = await dio.delete("$baseUrl/$id");
+      return SingleMovieResponseDTO.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to load data: $e');
+    }
+  }
+
 }

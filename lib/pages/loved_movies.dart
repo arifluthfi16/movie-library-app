@@ -88,7 +88,8 @@ class _LovedMoviesScreenState extends State<LovedMoviesScreen> {
                   child: MovieGrid(
                     addToFavorite: widget.addToFavorite,
                     displayedMovies: displayedMovies,
-                    lovedMovies: widget.lovedMovies
+                    lovedMovies: widget.lovedMovies,
+                    user: widget.user,
                   )
               )
             ],

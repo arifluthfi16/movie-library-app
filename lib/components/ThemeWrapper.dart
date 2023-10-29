@@ -11,7 +11,8 @@ class ThemeWrapper extends StatelessWidget {
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: const Color(0xFF6A4DFF),
-          secondary: const Color(0xFF8C76FF)
+          secondary: const Color(0xFF8C76FF),
+          background: Colors.white,
       ),
       ),
       home: child,

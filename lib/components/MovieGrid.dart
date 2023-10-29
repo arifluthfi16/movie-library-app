@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:movie_library/components/MovieCard.dart';
+import 'package:movie_library/dto/AuthDTO.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
 import 'package:movie_library/pages/movie_detail.dart';
 
@@ -8,12 +9,14 @@ class MovieGrid extends StatelessWidget {
   final List<MovieDTO> displayedMovies;
   final Function(MovieDTO) addToFavorite;
   final List<MovieDTO> lovedMovies;
+  final UserDTO user;
 
   const MovieGrid({
     super.key,
     required this.displayedMovies,
     required this.addToFavorite,
-    required this.lovedMovies
+    required this.lovedMovies,
+    required this.user
   });
 
   @override
@@ -34,6 +37,7 @@ class MovieGrid extends StatelessWidget {
                         addToFavorite: (MovieDTO movie) {
                           addToFavorite(movie);
                         },
+                        user: user,
                       );
                     },
                   ),

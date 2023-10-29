@@ -128,6 +128,7 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
                     addToFavorite: widget.addToFavorite,
                     displayedMovies: displayedMovies,
                     lovedMovies: widget.lovedMovies,
+                    user: widget.user,
                   )
               )
             ],
