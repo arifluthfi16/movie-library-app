@@ -123,6 +123,19 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
               Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CustomSearchBar(
                 controller: searchController,
               )),
+              const Padding(
+                padding: EdgeInsets.only(top: 0, bottom: 16),
+                child: Text(
+                  'Suggestion is based on User Country first letter',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ),
               Expanded(
                   child: MovieGrid(
                     addToFavorite: widget.addToFavorite,

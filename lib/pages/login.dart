@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final storage = const FlutterSecureStorage();
+  bool isSubmitLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: const BoxDecoration(
               color: Colors.white
           ),
-          padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
           child: Column(
             children: [
               Container(
@@ -36,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: 16),
                     Text(
                       'Movie Library',
                       textAlign: TextAlign.center,
@@ -93,15 +95,64 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: 'Password',
                         )
                     ),
+
+                    const SizedBox(height: 32),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Use these credentials to use the App',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w300,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("Username:"),
+                            Text("Password:"),
+                          ],
+                        ),
+                        SizedBox(width: 24,),
+                        Column(
+                          children: [
+                            Text("admin"),
+                            Text("admin"),
+                          ],
+                        ),
+                        SizedBox(width: 24,),
+                        Column(
+                          children: [
+                            Text("user"),
+                            Text("user"),
+                          ],
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
               CustomButton(
                 text: "Login",
                 backgroundColor: const Color(0xFF6A4DFF),
+                isLoading: isSubmitLoading,
                 onPressed: () async {
                   if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty)  {
                     try {
+                      setState(() {
+                        isSubmitLoading = true;
+                      });
                       LoginResponseDTO responseDTO = await AuthAPI.login(usernameController.text, passwordController.text);
                       if (responseDTO.data?.isNotEmpty ?? false) {
                         storage.write(key: "auth_token", value: responseDTO.data);
@@ -141,10 +192,14 @@ class _LoginPageState extends State<LoginPage> {
                           textColor: Colors.white,
                           fontSize: 16.0
                       );
+                    } finally {
+                      setState(() {
+                        isSubmitLoading = false;
+                      });
                     }
                   }
                 },
-              )
+              ),
             ],
           ),
         ),

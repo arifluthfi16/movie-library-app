@@ -190,7 +190,18 @@ class _CreateOrUpdateMovieScreenState extends State<CreateOrUpdateMovieScreen> {
             decoration: const InputDecoration(labelText: 'Thumbnail URL (Use image format e.g .jpg)'),
             maxLines: 2,
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 4,),
+          const Text(
+            'Thumbnail can be left empty',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black38,
+              fontSize: 16,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          const SizedBox(height: 40),
           CustomButton(
             backgroundColor: Colors.lightGreen,
             text: "Submit",

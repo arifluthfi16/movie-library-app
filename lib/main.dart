@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:movie_library/components/CustomSplashScreen.dart';
 import 'package:movie_library/dto/AuthDTO.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
 import 'package:movie_library/pages/home.dart';
 import 'package:movie_library/pages/login.dart';
-import 'package:movie_library/pages/movie_detail.dart';
 import 'package:movie_library/pages/profile.dart';
-import 'package:movie_library/pages/suggestion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'Flutter Demo',
-      home: const LoginPage(),
+      home: const CustomSplashScreen(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':
