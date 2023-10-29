@@ -1,10 +1,11 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:movie_library/api/RequestWrapper.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
 
 class MovieAPI {
-  static const String baseUrl = "http://10.0.2.2:8082/movies";
+  static const String baseUrl = "http://moviegateway.galakita.com/movies";
 
   static Future<MovieResponseDTO> getAllMovies() async {
     try {
@@ -29,6 +30,26 @@ class MovieAPI {
       } else {
         throw Exception('Failed to load data');
       }
+    } catch (e) {
+      throw Exception('Failed to load data: $e');
+    }
+  }
+
+  static Future<SingleMovieResponseDTO> createMovie (CreateOrUpdateMovieRequestDTO requestDTO) async {
+    try {
+      RequestWrapper dio = RequestWrapper();
+      final response = await dio.post(baseUrl, requestDTO);
+      return SingleMovieResponseDTO.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to load data: $e');
+    }
+  }
+
+  static Future<SingleMovieResponseDTO> updateMovie (int id, CreateOrUpdateMovieRequestDTO requestDTO) async {
+    try {
+      RequestWrapper dio = RequestWrapper();
+      final response = await dio.put("$baseUrl/$id", requestDTO);
+      return SingleMovieResponseDTO.fromJson(response.data);
     } catch (e) {
       throw Exception('Failed to load data: $e');
     }

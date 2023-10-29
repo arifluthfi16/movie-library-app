@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:movie_library/api/MovieAPI.dart';
-import 'package:movie_library/components/MovieCard.dart';
 import 'package:movie_library/components/SearchBar.dart';
 import 'package:movie_library/components/ThemeWrapper.dart';
 import 'package:movie_library/dto/MovieDTO.dart';
+import 'package:movie_library/pages/create_or_update_movie.dart';
 import 'package:movie_library/pages/loved_movies.dart';
-import 'package:movie_library/pages/movie_detail.dart';
 import 'package:movie_library/pages/suggestion.dart';
 import '../components/MovieGrid.dart';
 import '../dto/AuthDTO.dart';
@@ -88,6 +86,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             actions: [
+              Visibility(
+                visible: widget.user.role == "ADMIN",
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.black87,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return CreateOrUpdateMovieScreen(
+                            user: widget.user,
+                            action: "CREATE"
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
               IconButton(
                 icon: const Icon(
                   Icons.star_outline,

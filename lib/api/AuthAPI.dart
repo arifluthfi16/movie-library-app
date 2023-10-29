@@ -4,7 +4,7 @@ import 'package:movie_library/api/RequestWrapper.dart';
 import '../dto/AuthDTO.dart';
 
 class AuthAPI {
-  static const String baseUrl = "http://10.0.2.2:8080/auth";
+  static const String baseUrl = "http://moviegateway.galakita.com/auth";
 
   static Future<UserResponseDTO> getCurrentUser() async {
     try {

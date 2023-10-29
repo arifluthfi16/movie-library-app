@@ -83,6 +83,7 @@ class _SuggestedMovieScreenState extends State<SuggestedMovieScreen> {
                     title: e.title,
                     genre: e.genre,
                     releaseYear: e.releaseYear,
+                    thumbnailUrl: e.thumbnailUrl,
                   )
               ),
             )).toList()

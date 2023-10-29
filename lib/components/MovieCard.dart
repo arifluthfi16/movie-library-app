@@ -4,8 +4,37 @@ class MovieCard extends StatelessWidget {
   final String title;
   final String genre;
   final int releaseYear;
+  final String thumbnailUrl;
 
-  const MovieCard({Key? key, required this.title, required this.genre, required this.releaseYear}) : super(key: key);
+  const MovieCard({Key? key, required this.title, required this.genre, required this.releaseYear, required this.thumbnailUrl}) : super(key: key);
+
+  bool isValidImageUrl(String url) {
+    String imageUrlPattern = r'^(http|https)://.*\.(jpg|jpeg|png|gif|bmp)$';
+    RegExp regExp = RegExp(imageUrlPattern);
+    return regExp.hasMatch(url);
+  }
+
+  Widget getThumbnail () {
+    String url = "https://via.placeholder.com/150x200";
+    if (thumbnailUrl != "" && isValidImageUrl(thumbnailUrl)) url = thumbnailUrl;
+
+    return Container(
+      width: double.infinity,
+      height: 200,
+      decoration: ShapeDecoration(
+        image: DecorationImage(
+          image: NetworkImage(url),
+          fit: BoxFit.fill,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +59,7 @@ class MovieCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            height: 200,
-            decoration: const ShapeDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/165x200"),
-                fit: BoxFit.fill,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4),
-                  topRight: Radius.circular(4),
-                ),
-              ),
-            ),
-          ),
+          getThumbnail(),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

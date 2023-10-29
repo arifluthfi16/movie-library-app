@@ -45,6 +45,7 @@ class MovieGrid extends StatelessWidget {
                   title: e.title,
                   genre: e.genre,
                   releaseYear: e.releaseYear,
+                  thumbnailUrl: e.thumbnailUrl,
                 ),
               ),
             );

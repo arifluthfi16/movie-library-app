@@ -12,28 +12,38 @@ class MovieDetail extends StatelessWidget {
 
   const MovieDetail({Key? key, required this.movie, required this.addToFavorite, required this.isFavorite}) : super(key: key);
 
+  bool isValidImageUrl(String url) {
+    String imageUrlPattern = r'^(http|https)://.*\.(jpg|jpeg|png|gif|bmp)$';
+    RegExp regExp = RegExp(imageUrlPattern);
+    return regExp.hasMatch(url);
+  }
+
+  Widget getThumbnail () {
+    String url = "https://via.placeholder.com/150x200";
+    if (movie.thumbnailUrl != "" && isValidImageUrl(movie.thumbnailUrl)) url = movie.thumbnailUrl;
+
+    return Container(
+      width: 150,
+      height: 200,
+      decoration: ShapeDecoration(
+        image: DecorationImage(
+          image: NetworkImage(url),
+          fit: BoxFit.fill,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        ),
+      ),
+    );
+  }
+
   Widget movieDetailHeader () {
     return Container(
       height: 250,
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Row(
         children: [
-          Container(
-            width: 150,
-            height: 200,
-            decoration: const ShapeDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/150x200"),
-                fit: BoxFit.fill,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4),
-                  topRight: Radius.circular(4),
-                ),
-              ),
-            ),
-          ),
+          getThumbnail(),
           Expanded(
             child: Container(
               margin: const EdgeInsets.all(8),

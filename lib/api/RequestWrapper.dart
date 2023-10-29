@@ -32,13 +32,29 @@ class RequestWrapper {
   Future<Response<T>> post<T>(String path, dynamic data) async {
     final authToken = await getAuthToken();
     _dio.options.headers['Authorization'] = 'Bearer $authToken';
-    return _dio.post(path, data: data);
+    _dio.options.contentType = Headers.jsonContentType;
+    return _dio.post(
+        path,
+        data: data,
+        options: Options(
+          validateStatus: (status) { return status! < 500; },
+          followRedirects: true
+        )
+    );
   }
 
   Future<Response<T>> put<T>(String path, dynamic data) async {
     final authToken = await getAuthToken();
     _dio.options.headers['Authorization'] = 'Bearer $authToken';
-    return _dio.put(path, data: data);
+    _dio.options.contentType = Headers.jsonContentType;
+    return _dio.put(
+        path,
+        data: data,
+        options: Options(
+            validateStatus: (status) { return status! < 500; },
+            followRedirects: true
+        )
+    );
   }
 
   Future<Response<T>> delete<T>(String path) async {
